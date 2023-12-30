@@ -1,6 +1,6 @@
 # Foodie - Food Delivery Web 🍕 🍔
 
-Foodie is a project built from React JS, Redux Toolkit, and styled responsively by Bootstrap, CSS, Reactstrap. This website was built as a food delivery website which was guided by Coding With Munhib.
+Foodie is a project built from React JS, Redux Toolkit, and styled responsively by Bootstrap, CSS, Reactstrap. This website was built as a food delivery website.
 
 ## Visuals
 
@@ -20,10 +20,7 @@ Feel free to experience the app from ➡️ [here](https://foodie-delivery-tramn
 
 Download and install Node.js from this link https://nodejs.org/en/download/
 
-### Clone or download this repo.
 
-On your terminal or cmd, type: git clone git@github.com:tramnguyenhere/food-delivery-react-redux-app.git <br />
-On your command line, navigate to root folder and install: npm install
 
 ### Deploy the application
 

@@ -7,7 +7,7 @@ import { BASEPATH } from '../../../config';
 const ProductCard = (props) => {
   console.log(props.item);
   const { id, title, Imgs, price } = props.item;
-  const img = JSON.parse(Imgs)[0]?.split('uploads')[1]
+  const img = Imgs[0]?.split('uploads')[1]
   const dispatch = useDispatch();
   const addToCart = () => {
     dispatch(

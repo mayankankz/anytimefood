@@ -51,7 +51,7 @@ const FoodDetails = () => {
           <Row>
             <Col lg='2' md='2'>
               <div className='product__images'>
-                {JSON.parse(product.Imgs).map((img)=>{
+                {product.Imgs.map((img)=>{
                   <div
                   className='img__item mb-3'
                   onClick={() => setPreviewImg(`${BASEPATH}/${img.split('uploads')[1]}`)}

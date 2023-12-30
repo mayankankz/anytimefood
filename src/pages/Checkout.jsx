@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Form } from 'reactstrap';
@@ -19,12 +19,10 @@ const Checkout = () => {
   const [enteredNumber, setEnteredNumber] = useState(userDetails?.mobilenumber || '');
   const [enteredAddress, setEnteredAddress] = useState('');
   const [paymentType, setpaymentType] = useState(null)
-  const [orderId, setorderId] = useState('')
-
 
   const cartItems = useSelector((state) => state.cart.cartItems);
   const currentUser = useSelector((state) => state.auth.userDetails.id);
-  console.log(cartItems);
+  
 
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const shippingCost = 10;
@@ -32,7 +30,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   dispatch(cartUiActions.toggle());
-  useEffect(() => {
+  useLayoutEffect(() => {
     // If the user is not authenticated, navigate to the login page
     dispatch(cartUiActions.toggle());
     if (!isAuthenticated) {
@@ -42,15 +40,6 @@ const Checkout = () => {
   }, [isAuthenticated]);
 
 
-  const validateField = (value, fieldName) => {
-    if (!value.trim()) {
-      toast.error(`Please enter your ${fieldName.toLowerCase()}`, {
-        autoClose: 2000,
-      });
-      return false;
-    }
-    return true;
-  };
 
 
   const submitHandler = async (e) => {
@@ -66,6 +55,35 @@ const Checkout = () => {
       orderValue: totalAmount
     };
 
+    if (!enteredAddress.trim()) {
+      toast.error(`Please enter your address.`, {
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    if (!enteredName.trim()) {
+      toast.error(`Please enter your name.`, {
+        autoClose: 1000,
+      });
+      return;
+    }
+
+
+    if (!enteredNumber.trim()) {
+      toast.error(`Please enter your contact number.`, {
+        autoClose: 1000,
+      });
+      return;
+    }
+
+
+    if (!paymentType) {
+      toast.error(`Please select payment type.`, {
+        autoClose: 1000,
+      });
+      return;
+    }
 
     if (paymentType === 'Razorpay') {
       try {
@@ -112,7 +130,7 @@ const Checkout = () => {
       currency: "INR",
       name: "Any Time Food",
       description: "Food Anywhere any time.",
-      image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+      image: "http://admin.anytimefood.co.in/assets/res-logo.png",
       order_id: order.id,
       handler: async (response) => {
 				try {
