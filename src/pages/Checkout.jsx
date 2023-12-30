@@ -29,10 +29,9 @@ const Checkout = () => {
   const totalAmount = cartTotalAmount + shippingCost;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  dispatch(cartUiActions.toggle());
   useLayoutEffect(() => {
     // If the user is not authenticated, navigate to the login page
-    dispatch(cartUiActions.toggle());
+   
     if (!isAuthenticated) {
       console.log('User not logged in. Navigating to login page...');
       navigate('/login');
