@@ -17,7 +17,7 @@ const FoodDetails = () => {
   const { id } = useParams();
   const productsList = useSelector((state)=> state.products.products);
   const product = productsList.find((product) => product.id == id);
-  const [previewImg, setPreviewImg] = useState(`${BASEPATH}/${JSON.parse(product.Imgs)[0].split('uploads')[1]}`);
+  const [previewImg, setPreviewImg] = useState(`${BASEPATH}/${product.Imgs[0].split('uploads')[1]}`);
   const { title, price, category,description } = product;
   const relatedProduct = products.filter((item) => category === item.category);
   const dispatch = useDispatch();
