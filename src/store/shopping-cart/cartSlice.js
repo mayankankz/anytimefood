@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const initialState = {
   cartItems: [],
@@ -11,6 +12,9 @@ const cartSlice = createSlice({
 
   reducers: {
     addItem(state, action) {
+      toast.success(`Item added in cart.`,{
+        autoClose:500
+      })
       // Take data from action
       const newItem = action.payload;
       //Filtered new data in the initial state
@@ -18,13 +22,15 @@ const cartSlice = createSlice({
         (item) => item.id === newItem.id
       );
       // Total quantity will increase by 1
-      state.totalQuantity++;
+      if(!existingItem){
+        state.totalQuantity++;
+      }
       // If there is no new item in existing item, push the data of the new one to the array
       if (!existingItem) {
         state.cartItems.push({
           id: newItem.id,
           title: newItem.title,
-          image01: newItem.image01,
+          image01: newItem.img,
           price: newItem.price,
           quantity: 1,
           totalPrice: newItem.price,
@@ -43,6 +49,10 @@ const cartSlice = createSlice({
       );
     },
     removeItem(state, action) {
+     debugger
+     toast.error(`Item removed from cart.`,{
+      autoClose: 500
+     })
       const id = action.payload;
       const existingItem = state.cartItems.find((item) => item.id === id);
       state.totalQuantity--;
@@ -59,6 +69,10 @@ const cartSlice = createSlice({
       );
     },
     deleteItem(state, action) {
+      debugger
+      toast.error(`Item removed from cart.`,{
+        autoClose: 500
+       })
       const id = action.payload;
       const existingItem = state.cartItems.find((item) => item.id === id);
 
@@ -71,6 +85,11 @@ const cartSlice = createSlice({
         0
       );
     },
+    resetCart(state,action){
+      state.cartItems = [];
+      state.totalQuantity= 0;
+      state.totalAmount=0;
+    }
   },
 });
 

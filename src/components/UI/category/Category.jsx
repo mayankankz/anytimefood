@@ -12,15 +12,11 @@ const categoryData = [
     imgUrl: categoryImg01,
   },
   {
-    display: 'Pizza',
-    imgUrl: categoryImg02,
-  },
-  {
-    display: 'Asian food',
+    display: 'Street food',
     imgUrl: categoryImg03,
   },
   {
-    display: 'Row Meat',
+    display: 'Night Food',
     imgUrl: categoryImg04,
   },
 ];
@@ -31,7 +27,7 @@ const Category = () => {
       <Row>
         {categoryData.map((item) => {
           return (
-            <Col lg='3' md='4' sm='6' xs='6' className='mb-4'>
+            <Col lg='4' md='4' sm='6' xs='6' className='mb-4'>
               <div className='category__item d-flex align-items-center gap-3'>
                 <div className='category__img'>
                   <img src={item.imgUrl} alt='category__item' />

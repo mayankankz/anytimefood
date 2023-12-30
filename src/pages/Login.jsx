@@ -2,15 +2,48 @@ import React from 'react';
 import Helmet from '../components/Helmet/Helmet';
 import CommonSection from '../components/UI/common-section/CommonSection';
 import { Container, Row, Col } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
+import axios from 'axios';
+import { BASEPATH } from '../config';
+import { authActions } from '../store/Auth/Auth';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const loginNameRef = useRef();
   const loginPasswordRef = useRef();
-
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const submitHandler = async(e) => {
     e.preventDefault();
+
+    const email = loginNameRef.current.value;
+    const password = loginPasswordRef.current.value;
+
+    try {
+      const responce = await axios.post(`${BASEPATH}/user/login`, {
+        email, password
+      })
+      toast.success(responce.data.message, {
+        autoClose: 1500
+      });
+      localStorage.setItem('token', responce.data.token);
+      dispatch(authActions.Authenticated((responce.data.user)))
+      navigate('/Home')
+      
+    } catch (error) {
+
+      if (error.response.data.errors) {
+        toast.error(error.response.data.errors[0].msg, {
+          autoClose: 1500
+        })
+      } else {
+        toast.error(error.response.data.message, {
+          autoClose: 1500
+        });
+      }
+    }
   };
   return (
     <Helmet title='Login'>
@@ -22,8 +55,8 @@ const Login = () => {
               <form className='form mb-5' onSubmit={submitHandler}>
                 <div className='form__group'>
                   <input
-                    type='email'
-                    placeholder='Email'
+                    type='text'
+                    placeholder='Mobile Number'
                     ref={loginNameRef}
                   ></input>
                 </div>

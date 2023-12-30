@@ -3,7 +3,7 @@
 :root {
   --primary-color: #4c2c10;
   --secondary-color: #df2020;
-  --third-color: #fde4e4;
+  --third-color: #f69898;
 }
 
 * {
@@ -50,4 +50,11 @@ section {
   h2 {
     font-size: 1.5rem;
   }
+}
+
+
+.user__loggedIN{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }

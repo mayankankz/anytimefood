@@ -18,3 +18,11 @@
     margin-top: 40px;
   }
 }
+
+
+.noorder{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

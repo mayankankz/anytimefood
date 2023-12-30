@@ -9,6 +9,8 @@ import { cartActions } from '../store/shopping-cart/cartSlice';
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
+  
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <Helmet title='Cart'>
       <CommonSection title='Your cart' />
@@ -36,21 +38,23 @@ const Cart = () => {
                   </tbody>
                 </table>
               )}
-              <div className='mt-4'>
+             {cartItems.length !== 0 ?  <div className='mt-4'>
                 <h6>
                   Subtotal:
-                  <span className='cart__subtotal'> ${totalAmount}</span>
+                  <span className='cart__subtotal'> ₹{totalAmount}</span>
                 </h6>
                 <p>Taxes and shipping will be calculated at checkout</p>
                 <div className='cart__page-btn'>
                   <button className='addToCart__btn me-4'>
                     <Link to='/foods'>Continue Shopping</Link>
                   </button>
-                  <button className='addToCart__btn'>
+                  {isAuthenticated ? <button className='addToCart__btn'>
                     <Link to='/checkout'>Proceed to checkout</Link>
-                  </button>
+                  </button> : <button className='addToCart__btn'>
+                  <Link to='/login'>Login to continue</Link>
+                </button> }
                 </div>
-              </div>
+              </div>: ''}
             </Col>
           </Row>
         </Container>
@@ -70,7 +74,7 @@ const Tr = (props) => {
         <img src={image01} alt='food'></img>
       </td>
       <td className='text-center'>{title}</td>
-      <td className='text-center'>${price}</td>
+      <td className='text-center'>₹{price}</td>
       <td className='text-center'>{quantity} pcs</td>
       <td onClick={deleteItem} className='text-center cart__item-del'>
         <i className='ri-delete-bin-line'></i>

@@ -4,28 +4,31 @@ import { useParams } from 'react-router-dom';
 import Helmet from '../components/Helmet/Helmet';
 import CommonSection from '../components/UI/common-section/CommonSection';
 import { Container, Row, Col } from 'reactstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../store/shopping-cart/cartSlice';
 import ProductCard from '../components/UI/product-card/ProductCard';
 import '../styles/product-details.css';
+import { BASEPATH } from '../config';
 const FoodDetails = () => {
   const [tab, setTab] = useState('desc');
   const [enteredName, setEnteredName] = useState('');
   const [enteredEmail, setEnteredEmail] = useState('');
   const [reviewMsg, setReviewMsg] = useState('');
   const { id } = useParams();
-  const product = products.find((product) => product.id === id);
-  const [previewImg, setPreviewImg] = useState(product.image01);
-  const { title, price, category, desc, image01 } = product;
+  const productsList = useSelector((state)=> state.products.products);
+  const product = productsList.find((product) => product.id == id);
+  const [previewImg, setPreviewImg] = useState(`${BASEPATH}/${JSON.parse(product.Imgs)[0].split('uploads')[1]}`);
+  const { title, price, category,description } = product;
   const relatedProduct = products.filter((item) => category === item.category);
   const dispatch = useDispatch();
+  
   const addItem = () => {
     dispatch(
       cartActions.addItem({
         id,
         title,
         price,
-        image01,
+        img: previewImg,
       })
     );
   };
@@ -35,9 +38,7 @@ const FoodDetails = () => {
     console.log(enteredName, enteredEmail, reviewMsg);
   };
 
-  useEffect(() => {
-    setPreviewImg(product.image01);
-  }, [product]);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,24 +51,15 @@ const FoodDetails = () => {
           <Row>
             <Col lg='2' md='2'>
               <div className='product__images'>
-                <div
+                {JSON.parse(product.Imgs).map((img)=>{
+                  <div
                   className='img__item mb-3'
-                  onClick={() => setPreviewImg(product.image01)}
+                  onClick={() => setPreviewImg(`${BASEPATH}/${img.split('uploads')[1]}`)}
                 >
-                  <img src={product.image01} alt='' className='w-50' />
+                  <img src={`${BASEPATH}/${img.split('uploads')[1]}`} alt='' className='w-50' />
                 </div>
-                <div
-                  className='img__item mb-3'
-                  onClick={() => setPreviewImg(product.image02)}
-                >
-                  <img src={product.image02} alt='' className='w-50' />
-                </div>
-                <div
-                  className='img__item'
-                  onClick={() => setPreviewImg(product.image03)}
-                >
-                  <img src={product.image03} alt='' className='w-50' />
-                </div>
+                })}
+                
               </div>
             </Col>
             <Col lg='4' md='4'>
@@ -107,7 +99,7 @@ const FoodDetails = () => {
 
               {tab === 'desc' ? (
                 <div className='tab__content'>
-                  <p>{desc}</p>
+                  <p>{description}</p>
                 </div>
               ) : (
                 <div className='tab__form mb-3'>

@@ -7,11 +7,15 @@ import ProductCard from '../components/UI/product-card/ProductCard';
 import '../styles/all-foods.css';
 import ReactPaginate from 'react-paginate';
 import '../styles/pagination.css';
+import { useSelector } from 'react-redux';
 
 const AllFoods = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [pageNumber, setPageNumber] = useState(0);
   // eslint-disable-next-line array-callback-return
+  
+
+  const products = useSelector((state)=> state.products.products);
   const searchedProduct = products.filter((item) => {
     if (searchTerm.value === '') {
       return item;
