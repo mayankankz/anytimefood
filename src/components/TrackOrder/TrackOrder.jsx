@@ -18,10 +18,11 @@ import {
 import "./Track.css";
 import { io } from "socket.io-client";
 import { toast } from "react-toastify";
+import { BASEPATH } from "../../config";
 
 export default function TrackOrder({ basicModal, setBasicModal, order ,setIsOrderUpdated}) {
   const toggleOpen = () => setBasicModal(!basicModal);
-  const socket = io('http://localhost:7000');
+  const socket = io(BASEPATH);
   const [cuurentorder,setCuurentOrder] = useState(order)
 
   useEffect(()=>{

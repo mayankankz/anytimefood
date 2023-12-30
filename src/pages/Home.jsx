@@ -47,7 +47,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = io('http://localhost:7000');
+    const socket = io(`${BASEPATH}`);
     const fetchData = async () => {
       try {
         setLoading(true);
